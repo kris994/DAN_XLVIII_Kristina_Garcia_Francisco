@@ -89,32 +89,27 @@ namespace DAN_XLVIII_Kristina_Garcia_Francisco.ViewModel
         /// <param name="obj"></param>
         private void LoginExecute(object obj)
         {
+            Helper.Validation validation = new Helper.Validation();
             string password = (obj as PasswordBox).Password;
-            bool found = false;
-            if (UserList.Any())
+            if (User.JMBG == validation.JMBGChecker(User.JMBG) && password == "Gost")
             {
-                for (int i = 0; i < UserList.Count; i++)
-                {
-                    if (User.JMBG == UserList[i].JMBG && password == "Gost")
-                    {
-                        Service.LoggedInUser.Add(UserList[i]);
-                        MainWindow mw = new MainWindow();
-                        InfoLabel = "Logged in";
-                        found = true;
-                        view.Close();
-                        mw.Show();
-                        break;
-                    }
-                }
+                InfoLabel = "Logged in";
+                service.AddUser(User);
+                UserList.Add(User);
 
-                if (found == false)
+                LoggedUser.CurrentUser = new tblUser
                 {
-                    InfoLabel = "Wrong Username or Password";
-                }
+                    UserID = User.UserID,
+                    JMBG = User.JMBG
+                };
+
+                MainWindow mw = new MainWindow();
+                view.Close();
+                mw.Show();
             }
             else
             {
-                InfoLabel = "Database is empty";
+                InfoLabel = "Wrong Username or Password";
             }
 
             if (User.JMBG == "Zaposleni" && password == "Zaposleni")

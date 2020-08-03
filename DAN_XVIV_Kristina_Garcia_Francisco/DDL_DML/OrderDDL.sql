@@ -39,13 +39,8 @@ CREATE TABLE tblOrder(
 	UserID INT FOREIGN KEY REFERENCES tblUser(UserID),
 );
 
-INSERT INTO tblUser(JMBG) VALUES ('1111111111111')
-INSERT INTO tblUser(JMBG) VALUES ('2222222222222')
-INSERT INTO tblUser(JMBG) VALUES ('3333333333333')
-INSERT INTO tblUser(JMBG) VALUES ('4444444444444')
-
-INSERT INTO tblItem(ItemName, Price) VALUES ('Soup', '150')
-INSERT INTO tblItem(ItemName, Price) VALUES ('Salad', '459.99')
-INSERT INTO tblItem(ItemName, Price) VALUES ('Meat', '1259')
-INSERT INTO tblItem(ItemName, Price) VALUES ('Hamburger', '380')
-INSERT INTO tblItem(ItemName, Price) VALUES ('Pizza', '790')
+INSERT INTO tblItem(ItemName, Price) VALUES ('Mini Pizza', '150')
+INSERT INTO tblItem(ItemName, Price) VALUES ('Salami Pizza', '459.99')
+INSERT INTO tblItem(ItemName, Price) VALUES ('Ham Pizza', '1259')
+INSERT INTO tblItem(ItemName, Price) VALUES ('Bacon Pizza', '380')
+INSERT INTO tblItem(ItemName, Price) VALUES ('Family Pizza', '790')

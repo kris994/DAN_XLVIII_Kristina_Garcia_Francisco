@@ -12,11 +12,6 @@ namespace DAN_XLVIII_Kristina_Garcia_Francisco
     class Service
     {
         /// <summary>
-        /// Saves the login user
-        /// </summary>
-        public static List<tblUser> LoggedInUser = new List<tblUser>();
-
-        /// <summary>
         /// Gets all information about users
         /// </summary>
         /// <returns>a list of found users</returns>
@@ -222,6 +217,23 @@ namespace DAN_XLVIII_Kristina_Garcia_Francisco
             }
         }
 
+        /// <summary>
+        /// Searches for a user with the given jmbg, returns 0 if it does not exist
+        /// </summary>
+        /// <param name="jmbg">Checks if the user with that JMBG exists</param>
+        /// <returns>The found user id</returns>
+        public int FindUserByJMBG(string jmbg)
+        {
+            for (int i = 0; i < GetAllUsers().Count; i++)
+            {
+                if (GetAllUsers()[i].JMBG == jmbg)
+                {
+                    return GetAllUsers()[i].UserID;
+                }
+            }
+            return 0;
+        }
+
         public int CartExists(int itemID, int userID)
         {
             int cartId = 0;
@@ -295,6 +307,44 @@ namespace DAN_XLVIII_Kristina_Garcia_Francisco
                         context.SaveChanges();
                        
                         return shoppingCartToEdit;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Exception" + ex.Message.ToString());
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Adds the user
+        /// </summary>
+        /// <param name="user">the user that is being added</param> 
+        /// <returns>a new user</returns>
+        public tblUser AddUser(tblUser user)
+        {
+            try
+            {
+                using (OrderDBEntities context = new OrderDBEntities())
+                {
+                    if (FindUserByJMBG(user.JMBG) == 0)
+                    {
+                        tblUser newUser = new tblUser
+                        {
+                            JMBG = user.JMBG
+                        };
+
+                        context.tblUsers.Add(newUser);
+                        context.SaveChanges();
+                        user.UserID = newUser.UserID;
+
+                        return newUser;
+                    }
+                    else
+                    {
+                        user.UserID = FindUserByJMBG(user.JMBG);
+                        return user;
                     }
                 }
             }
