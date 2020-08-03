@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DAN_XLVIII_Kristina_Garcia_Francisco.Model;
+using System;
 using System.Globalization;
 using System.Windows.Data;
 
@@ -24,7 +25,7 @@ namespace DAN_XLVIII_Kristina_Garcia_Francisco.Helper
             double orderPrice = 0;
             for (int i = 0; i < service.GetAllShoppingCarts().Count; i++)
             {
-                if (service.GetAllShoppingCarts()[i].ItemID == (int)value)
+                if (service.GetAllShoppingCarts()[i].ItemID == (int)value && service.GetAllShoppingCarts()[i].UserID == LoggedUser.CurrentUser.UserID)
                 {
                     int index = service.GetAllItems().FindIndex(f => f.ItemID == service.GetAllShoppingCarts()[i].ItemID);
                     double price = double.Parse(service.GetAllItems()[index].Price);
@@ -46,7 +47,7 @@ namespace DAN_XLVIII_Kristina_Garcia_Francisco.Helper
         /// <returns></returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            return value;
         }
     }
 }

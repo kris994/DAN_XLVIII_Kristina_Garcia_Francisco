@@ -234,6 +234,12 @@ namespace DAN_XLVIII_Kristina_Garcia_Francisco
             return 0;
         }
 
+        /// <summary>
+        /// Checks if the shopping cart exists
+        /// </summary>
+        /// <param name="itemID">Id of the item in the cart</param>
+        /// <param name="userID">Id of the user that owns the cart</param>
+        /// <returns>the shoppingcart id</returns>
         public int CartExists(int itemID, int userID)
         {
             int cartId = 0;
@@ -252,6 +258,11 @@ namespace DAN_XLVIII_Kristina_Garcia_Francisco
             return cartId;
         }
 
+        /// <summary>
+        /// Checks the amount of items in the cart
+        /// </summary>
+        /// <param name="cartID">The cart id</param>
+        /// <returns>the total amount of items in the cart</returns>
         public int CurrentCartItemAmount(int cartID)
         {
             int currentAmount = 0;
@@ -355,13 +366,16 @@ namespace DAN_XLVIII_Kristina_Garcia_Francisco
             }
         }
 
+        /// <summary>
+        /// Empries the shopping cart of the user
+        /// </summary>
+        /// <param name="userID">users whoes shopping cart we are empting</param>
         public void EmptyShoppingCart(int userID)
         {
             try
             {
                 using (OrderDBEntities context = new OrderDBEntities())
                 {
-
                     for (int i = 0; i < GetAllUserShoppingCarts(userID).Count; i++)
                     {
                         tblShoppingCart shoppingCartToRemove = (from r in context.tblShoppingCarts
@@ -369,8 +383,8 @@ namespace DAN_XLVIII_Kristina_Garcia_Francisco
                                                                 select r).First();
 
                         context.tblShoppingCarts.Remove(shoppingCartToRemove);
-                    }
-                    context.SaveChanges();
+                        context.SaveChanges();
+                    }                   
                 }
             }
             catch (Exception ex)
@@ -390,17 +404,9 @@ namespace DAN_XLVIII_Kristina_Garcia_Francisco
             {
                 using (OrderDBEntities context = new OrderDBEntities())
                 {
-                    double orderPrice = 0;
-
-                    for (int i = 0; i < GetAllUserShoppingCarts(userID).Count; i++)
-                    {
-                        int index = GetAllItems().FindIndex(f => f.ItemID == GetAllUserShoppingCarts(userID)[i].ItemID);
-                        double price = double.Parse(GetAllItems()[index].Price);
-                        orderPrice = orderPrice + (double)GetAllUserShoppingCarts(userID)[i].Amount * price;
-                    }
                     tblOrder newOrder = new tblOrder
                     {
-                        TotalPrice = orderPrice.ToString(),
+                        TotalPrice = TotalValue(),
                         OrderStatus = "Waiting",
                         OrderCreated = DateTime.Now,
                         UserID = userID
@@ -518,6 +524,25 @@ namespace DAN_XLVIII_Kristina_Garcia_Francisco
             {
                 Debug.WriteLine("Exception" + ex.Message.ToString());
             }
+        }
+
+        /// <summary>
+        /// Calculates the total value of items in the cart
+        /// </summary>
+        /// <returns>The total value</returns>
+        public string TotalValue()
+        {
+            Service service = new Service();
+
+            double orderPrice = 0;
+
+            for (int i = 0; i < service.GetAllUserShoppingCarts(LoggedUser.CurrentUser.UserID).Count; i++)
+            {
+                int index = service.GetAllItems().FindIndex(f => f.ItemID == service.GetAllUserShoppingCarts(LoggedUser.CurrentUser.UserID)[i].ItemID);
+                double price = double.Parse(service.GetAllItems()[index].Price);
+                orderPrice = orderPrice + (double)service.GetAllUserShoppingCarts(LoggedUser.CurrentUser.UserID)[i].Amount * price;
+            }
+            return orderPrice.ToString();
         }
     }
 }

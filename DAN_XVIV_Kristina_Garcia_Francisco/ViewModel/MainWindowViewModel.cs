@@ -32,6 +32,7 @@ namespace DAN_XLVIII_Kristina_Garcia_Francisco.ViewModel
             UserShoppingCartList = service.GetAllUserShoppingCarts(LoggedUser.CurrentUser.UserID).ToList();
             ShoppingCartList = service.GetAllShoppingCarts();
             UserOrderList = service.GetAllUserOrders(LoggedUser.CurrentUser.UserID).ToList();
+            TotalLabel = service.TotalValue();
             Thread showMenu = new Thread(ShowMenu);
             showMenu.Start();
         }
@@ -219,6 +220,23 @@ namespace DAN_XLVIII_Kristina_Garcia_Francisco.ViewModel
                 OnPropertyChanged("ItemOrder");
             }
         }
+
+        /// <summary>
+        /// Total amount of items label
+        /// </summary>
+        private string totalLabel;
+        public string TotalLabel
+        {
+            get
+            {
+                return totalLabel;
+            }
+            set
+            {
+                totalLabel = value;
+                OnPropertyChanged("TotalLabel");
+            }
+        }
         #endregion
 
         /// <summary>
@@ -255,6 +273,9 @@ namespace DAN_XLVIII_Kristina_Garcia_Francisco.ViewModel
             }
         }
 
+        /// <summary>
+        /// Shows the menu items
+        /// </summary>
         public void ShowMenu()
         {
             for (int i = 0; i < UserOrderList.Count; i++)
@@ -301,6 +322,7 @@ namespace DAN_XLVIII_Kristina_Garcia_Francisco.ViewModel
                 service.AddItem(Item, LoggedUser.CurrentUser.UserID);
                 UserShoppingCartList = service.GetAllUserShoppingCarts(LoggedUser.CurrentUser.UserID).ToList();
                 ShoppingCartList = service.GetAllShoppingCarts();
+                TotalLabel = service.TotalValue();
             }
             catch (Exception ex)
             {
@@ -368,6 +390,7 @@ namespace DAN_XLVIII_Kristina_Garcia_Francisco.ViewModel
                     ShoppingCartList.RemoveAll(i => i.UserID == LoggedUser.CurrentUser.UserID && i.ItemID == Item.ItemID);
                     UserShoppingCartList = service.GetAllUserShoppingCarts(LoggedUser.CurrentUser.UserID).ToList();
                     ShoppingCartList = service.GetAllShoppingCarts();
+                    TotalLabel = service.TotalValue();
                 }
             }
             catch (Exception ex)

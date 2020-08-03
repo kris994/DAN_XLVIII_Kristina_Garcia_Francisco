@@ -6,14 +6,11 @@
         xmlns:local="clr-namespace:DAN_XLVIII_Kristina_Garcia_Francisco.View"
         xmlns:c="clr-namespace:DAN_XLVIII_Kristina_Garcia_Francisco.Helper"
         mc:Ignorable="d"
-        Title="Worker" Height="450" Width="500" Background="#5BCED0">
+        Title="Worker" Height="450" Width="500">
     <Window.Resources>
         <c:JMBGConverter x:Key="JMBGConverter" />
     </Window.Resources>
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto"/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
             <RowDefinition Height="auto"/>
@@ -30,10 +27,10 @@
                       AutoGenerateColumns="False" HorizontalGridLinesBrush="Black" BorderBrush="Black" Foreground="Black"
                       FontWeight="Bold" Margin="20" CanUserAddRows="false" IsReadOnly="True">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Total Price" Binding="{Binding TotalPrice}"/>
-                    <DataGridTextColumn Header="User" Binding="{Binding UserID, Converter={StaticResource ResourceKey=JMBGConverter}}"/>
-                    <DataGridTextColumn Header="Date" Binding="{Binding OrderCreated}"/>
-                    <DataGridTextColumn Header="Status" Binding="{Binding OrderStatus}"/>
+                    <DataGridTextColumn Header="Total Price" Binding="{Binding TotalPrice}" Width="0.20*"/>
+                    <DataGridTextColumn Header="User" Binding="{Binding UserID, Converter={StaticResource ResourceKey=JMBGConverter}}" Width="0.30*"/>
+                    <DataGridTextColumn Header="Date" Binding="{Binding OrderCreated}" Width="0.30*"/>
+                    <DataGridTextColumn Header="Status" Binding="{Binding OrderStatus}" Width="0.20*"/>
 
                     <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>
@@ -63,10 +60,10 @@
                       AutoGenerateColumns="False" HorizontalGridLinesBrush="Black" BorderBrush="Black" Foreground="Black"
                       FontWeight="Bold" Margin="20" CanUserAddRows="false" IsReadOnly="True">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Total Price" Binding="{Binding TotalPrice}"/>
-                    <DataGridTextColumn Header="User" Binding="{Binding UserID, Converter={StaticResource ResourceKey=JMBGConverter}}"/>
-                    <DataGridTextColumn Header="Date" Binding="{Binding OrderCreated}"/>
-                    <DataGridTextColumn Header="Status" Binding="{Binding OrderStatus}"/>
+                    <DataGridTextColumn Header="Total Price" Binding="{Binding TotalPrice}" Width="0.20*"/>
+                    <DataGridTextColumn Header="User" Binding="{Binding UserID, Converter={StaticResource ResourceKey=JMBGConverter}}" Width="0.30*"/>
+                    <DataGridTextColumn Header="Date" Binding="{Binding OrderCreated}" Width="0.30*"/>
+                    <DataGridTextColumn Header="Status" Binding="{Binding OrderStatus}" Width="0.20*"/>
                     <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
