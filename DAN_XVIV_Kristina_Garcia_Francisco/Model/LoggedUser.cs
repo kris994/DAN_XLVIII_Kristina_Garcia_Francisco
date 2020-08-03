@@ -1,7 +1,13 @@
 ﻿namespace DAN_XLVIII_Kristina_Garcia_Francisco.Model
 {
+    /// <summary>
+    /// Current logged in user data
+    /// </summary>
     public static class LoggedUser
     {
+        /// <summary>
+        /// Current user
+        /// </summary>
         private static tblUser currentUser;
         public static tblUser CurrentUser
         {

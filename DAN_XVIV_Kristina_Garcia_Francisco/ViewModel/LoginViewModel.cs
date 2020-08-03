@@ -23,6 +23,9 @@ namespace DAN_XLVIII_Kristina_Garcia_Francisco.ViewModel
         #endregion
 
         #region Property
+        /// <summary>
+        /// Login info label
+        /// </summary>
         private string infoLabel;
         public string InfoLabel
         {
@@ -37,6 +40,9 @@ namespace DAN_XLVIII_Kristina_Garcia_Francisco.ViewModel
             }
         }
 
+        /// <summary>
+        /// Used for saving the current user
+        /// </summary>
         private tblUser user;
         public tblUser User
         {
@@ -51,6 +57,9 @@ namespace DAN_XLVIII_Kristina_Garcia_Francisco.ViewModel
             }
         }
 
+        /// <summary>
+        /// List of all users in the application
+        /// </summary>
         private List<tblUser> userList;
         public List<tblUser> UserList
         {
