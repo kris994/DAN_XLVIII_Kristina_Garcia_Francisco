@@ -376,7 +376,8 @@ namespace DAN_XLVIII_Kristina_Garcia_Francisco
             {
                 using (OrderDBEntities context = new OrderDBEntities())
                 {
-                    for (int i = 0; i < GetAllUserShoppingCarts(userID).Count; i++)
+                    int shoppingChartCount = GetAllUserShoppingCarts(userID).Count;
+                    for (int i = 0; i < shoppingChartCount; i++)
                     {
                         tblShoppingCart shoppingCartToRemove = (from r in context.tblShoppingCarts
                                                                 where r.UserID == userID
