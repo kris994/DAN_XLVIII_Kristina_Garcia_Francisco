@@ -29,9 +29,9 @@ namespace DAN_XLVIII_Kristina_Garcia_Francisco.ViewModel
         {
             main = mainOpen;
             ItemList = service.GetAllItems().ToList();
-            UserShoppingCartList = service.GetAllUserShoppingCarts(Service.LoggedInUser[0].UserID).ToList();
+            UserShoppingCartList = service.GetAllUserShoppingCarts(LoggedUser.CurrentUser.UserID).ToList();
             ShoppingCartList = service.GetAllShoppingCarts();
-            UserOrderList = service.GetAllUserOrders(Service.LoggedInUser[0].UserID).ToList();
+            UserOrderList = service.GetAllUserOrders(LoggedUser.CurrentUser.UserID).ToList();
             Thread showMenu = new Thread(ShowMenu);
             showMenu.Start();
         }
@@ -298,8 +298,8 @@ namespace DAN_XLVIII_Kristina_Garcia_Francisco.ViewModel
             try
             {
                 int itemID = Item.ItemID;
-                service.AddItem(Item, Service.LoggedInUser[0].UserID);
-                UserShoppingCartList = service.GetAllUserShoppingCarts(Service.LoggedInUser[0].UserID).ToList();
+                service.AddItem(Item, LoggedUser.CurrentUser.UserID);
+                UserShoppingCartList = service.GetAllUserShoppingCarts(LoggedUser.CurrentUser.UserID).ToList();
                 ShoppingCartList = service.GetAllShoppingCarts();
             }
             catch (Exception ex)
@@ -363,10 +363,10 @@ namespace DAN_XLVIII_Kristina_Garcia_Francisco.ViewModel
             {
                 if (Item != null)
                 {
-                    service.RemoveItem(Item, Service.LoggedInUser[0].UserID);
-                    UserShoppingCartList.RemoveAll(i => i.UserID == Service.LoggedInUser[0].UserID && i.ItemID == Item.ItemID);
-                    ShoppingCartList.RemoveAll(i => i.UserID == Service.LoggedInUser[0].UserID && i.ItemID == Item.ItemID);
-                    UserShoppingCartList = service.GetAllUserShoppingCarts(Service.LoggedInUser[0].UserID).ToList();
+                    service.RemoveItem(Item, LoggedUser.CurrentUser.UserID);
+                    UserShoppingCartList.RemoveAll(i => i.UserID == LoggedUser.CurrentUser.UserID && i.ItemID == Item.ItemID);
+                    ShoppingCartList.RemoveAll(i => i.UserID == LoggedUser.CurrentUser.UserID && i.ItemID == Item.ItemID);
+                    UserShoppingCartList = service.GetAllUserShoppingCarts(LoggedUser.CurrentUser.UserID).ToList();
                     ShoppingCartList = service.GetAllShoppingCarts();
                 }
             }
@@ -474,11 +474,11 @@ namespace DAN_XLVIII_Kristina_Garcia_Francisco.ViewModel
         {
             try
             {
-                service.AddOrder(Service.LoggedInUser[0].UserID);
-                UserOrderList = service.GetAllUserOrders(Service.LoggedInUser[0].UserID).ToList();
+                service.AddOrder(LoggedUser.CurrentUser.UserID);
+                UserOrderList = service.GetAllUserOrders(LoggedUser.CurrentUser.UserID).ToList();
 
                 UserShoppingCartList.Clear();
-                ShoppingCartList.RemoveAll(i => i.UserID == Service.LoggedInUser[0].UserID);
+                ShoppingCartList.RemoveAll(i => i.UserID == LoggedUser.CurrentUser.UserID);
             }
             catch (Exception ex)
             {
@@ -543,14 +543,8 @@ namespace DAN_XLVIII_Kristina_Garcia_Francisco.ViewModel
             try
             {
                 Login login = new Login();
-                if(Service.LoggedInUser.Count != 0)
+                if (Application.Current.Windows.OfType<MainWindow>().FirstOrDefault() != null)
                 {
-                    // Empty Shopping Cart when exiting
-                    //UserShoppingCartList.Clear();
-                    //ShoppingCartList.RemoveAll(i => i.UserID == Service.LoggedInUser[0].UserID);
-                    //service.EmptyShoppingCart(Service.LoggedInUser[0].UserID);
-
-                    Service.LoggedInUser.RemoveAt(0);
                     main.Close();
                 }
                 else
